@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
-import {xml} from './devXML.js';
+import {xml} from './dev-xml.js';
 import { GamesList } from './GamesList.js';
 const convert = require('xml-js');
 
@@ -31,7 +30,30 @@ class App extends Component {
     const data = JSON.parse(
       convert.xml2json(xml, { compact: true, spaces: 2})
     );
-    this.setState({ games: data.items.item });
+
+    const games = (data.items.item).map(game => {
+      return {
+        id:         game._attributes.objectid,
+        name:       game.name._text,
+        rating:     Math.round(parseFloat(
+                      game.stats.rating.average._attributes.value
+                    ) * 100) / 100,
+        thumbnail:  game.thumbnail._text,
+        year:       game.yearpublished._text,
+        players: {
+          min:      parseInt(game.stats._attributes.minplayers),
+          max:      parseInt(game.stats._attributes.maxplayers)
+        },
+        playtime: {
+          min:      parseInt(game.stats._attributes.minplaytime),
+          max:      parseInt(game.stats._attributes.maxplaytime)
+        },
+        url:        'https://boardgamegeek.com/boardgame/'
+                    + game._attributes.objectid,
+      }
+    });
+
+    this.setState({ games: games });
   }
 
   render() {

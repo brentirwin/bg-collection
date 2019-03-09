@@ -7,5 +7,9 @@ export const GamesList = props => {
       <Game game={game} />
     </li>
   ));
-  return <ul>{games}</ul>;
+  return (
+  	<div className="gamesList">
+  		<ul className="gamesList">{games}</ul>
+  	</div>
+  	);
 }
