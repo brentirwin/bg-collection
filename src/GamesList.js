@@ -3,27 +3,28 @@ import { Game } from './Game.js';
 
 export class GamesList extends React.Component {
 
-	filter(games, filter, which, target) {
-		return games.filter(
-			game => {
-				if (filter)
-					if (target >= game[which].min && target <= game[which].max)
-						return game;
-					else return null;
-				return game;
-			}
-		);
-	}
-
 	render() {
 
-		const filteredGames = this.filter(this.filter(this.props.games,
-																									this.props.filter.numPlayers,
-																									'players',
-																									this.props.numPlayers),
-																					 this.props.filter.playTime,
-																					 'playtime',
-																					 this.props.playTime);
+		const filteredGames = this.props.games.filter( game => {
+			if (this.props.filter.numPlayers) {
+				if (this.props.numPlayers === 10 && game.players.max >= 10)
+					return game;
+				else if (this.props.numPlayers >= game.players.min &&
+						this.props.numPlayers <= game.players.max)
+					return game;
+				else return null;
+			} else return game;
+		}).filter( game => {
+			if (this.props.filter.playTime) {
+				if (this.props.playTime === 0 && game.playtime.min <= 15)
+					return game;
+				else if (this.props.playTime === 120)
+					return game;
+				else if (this.props.playTime >= game.playtime.min)
+					return game;
+				else return null;
+			} else return game;
+		});
 
 	  const games = filteredGames.map((game, index) => (
 	    <li key={index}>
