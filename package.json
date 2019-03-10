@@ -1,9 +1,11 @@
 {
   "name": "bg-collection",
+  "homepage": "https://brentirwin.github.io/bg-collection",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
     "rc-slider": "^8.6.6",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -11,6 +13,8 @@
     "xml-js": "^1.6.11"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
