@@ -150,7 +150,7 @@ class App extends Component {
           <GamesList
             games={this.state.games}
             filter={this.state.filter}
-            numPlayers={this.state.numPlayers.num}
+            numPlayers={this.state.numPlayers}
             playTime={this.state.playTime}
             complexity={this.state.complexity}
           />

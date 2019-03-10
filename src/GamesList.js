@@ -16,6 +16,7 @@ export class GamesList extends React.Component {
 
 		const filteredGames = this.props.games.filter( game => {
 			if (this.props.filter.numPlayers) {
+				console.log(this.props.numPlayers);
 				if (this.props.numPlayers === 10 && game.numPlayers.max >= 10)
 					return game;
 				if (this.props.numPlayers >= game.numPlayers.min &&
