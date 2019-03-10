@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/bg-collection/static/js/2.e702c18e.chunk.js"
   },
   {
-    "revision": "135abe754ef8da98787be8c4b659628b",
+    "revision": "17073815e2a6d95a74251dfb5b568a73",
     "url": "/bg-collection/index.html"
   }
 ];
