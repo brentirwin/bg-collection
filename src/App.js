@@ -1,43 +1,44 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
-import {xml} from './dev-xml.js';
-import {xml_e} from './xml-extended.js';
 import { GamesList } from './GamesList.js';
 import { Filters } from './Filters.js';
+import { user } from './user.js';
+import { defaults } from './defaults.js';
 const convert = require('xml-js');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'brentirwin',
-      numPlayers: 5,
-      playTime: 30,
+      username: user.username,
+      numPlayers: defaults.numPlayers,
+      playTime: defaults.playTime,
+      complexity: defaults.complexity,
       filter: {
         numPlayers: false,
-        playTime: false
+        playTime: false,
+        complexity: false
       },
       games: []
     };
 
     this.handleNumPlayersChange = this.handleNumPlayersChange.bind(this);
     this.handlePlayTimeChange = this.handlePlayTimeChange.bind(this);
+    this.handleComplexityChange = this.handleComplexityChange.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
   }
 
   handleNumPlayersChange(value) {
-    // const str = (value === 10) ? '10+' : value.toString();
-    // const players = { string: str, num: value };
     this.setState({ numPlayers: value });
   }
 
   handlePlayTimeChange(value) {
-    // const str = (value === 0) ? '<15'
-    //       : (value === 120) ? '120+'
-    //       : value.toString();
-    // const time = { string: str, num: value };
     this.setState({ playTime: value });
+  }
+
+  handleComplexityChange(value) {
+    this.setState({ complexity: value });
   }
 
   handleCheck(event) {
@@ -52,23 +53,35 @@ class App extends Component {
   }
 
   async componentDidMount() {
-/*
-    const url =
-      'https://boardgamegeek.com/xmlapi2/collection?username=' +
-      this.state.username +
-      '&stats=1';
-    axios.get(url).then(res => {
-      const data = JSON.parse(
-        convert.xml2json(res.data, { compact: true, spaces: 2 })
-      );
-      this.setState({ games: data.items.item });
-    });
-*/
-    const data = JSON.parse(
-      convert.xml2json(xml_e, { compact: true, spaces: 2})
-    );
 
-    const games = (data.items.item).map(game => {
+    async function getData(username) {
+      const url =
+        'https://boardgamegeek.com/xmlapi2/collection?username='
+        + username;
+
+      const userData = await axios.get(url).then(res => {
+        const data = JSON.parse(
+          convert.xml2json(res.data, { compact: true, spaces: 2 })
+        );
+        return data.items.item;
+      });
+
+      const url2 = 
+        'https://boardgamegeek.com/xmlapi2/thing?id='
+        + userData.map( game => game._attributes.objectid ).join(',')
+        + '&stats=1';
+
+      const games = await axios.get(url2).then(res => {
+        const data = JSON.parse(
+          convert.xml2json(res.data, { compact: true, spaces: 2 })
+        );
+        return data.items.item;
+      });
+      return games;
+    }
+    const rawGames = await getData(this.state.username);
+
+    const games = (rawGames).map(game => {
 
       const getCategory = (cat) => {
         return game.link.filter(link => {
@@ -77,6 +90,12 @@ class App extends Component {
           return link._attributes.value;
         });
       };
+
+      const decodeHTML = (html) => {
+        var txt = document.createElement('textarea');
+        txt.innerHTML = html;
+        return txt.value;
+      }
 
       return {
         id:         game._attributes.id,
@@ -98,7 +117,7 @@ class App extends Component {
         },
         url:        'https://boardgamegeek.com/boardgame/'
                     + game._attributes.id,
-        description: game.description._text,
+        description: decodeHTML(game.description._text),
         categories: getCategory('boardgamecategory'),
         mechanics:  getCategory('boardgamemechanic'),
         designer:   getCategory('boardgamedesigner')[0],
@@ -108,19 +127,23 @@ class App extends Component {
       }
     });
 
-    console.log(games);
     this.setState({ games: games });
   }
 
   render() {
     return (
       <div className="App">
-          <h1>My Board Games</h1>
+          <h1>{user.name}'s Board Games</h1>
           <Filters
             handleNumPlayersChange={this.handleNumPlayersChange}
             numPlayers={this.state.numPlayers}
+
             handlePlayTimeChange={this.handlePlayTimeChange}
             playTime={this.state.playTime}
+
+            handleComplexityChange={this.handleComplexityChange}
+            complexity={this.state.complexity}
+
             handleCheck={this.handleCheck}
             filter={this.state.filter}
           />
@@ -128,7 +151,8 @@ class App extends Component {
             games={this.state.games}
             filter={this.state.filter}
             numPlayers={this.state.numPlayers.num}
-            playTime={this.state.playTime.num}
+            playTime={this.state.playTime}
+            complexity={this.state.complexity}
           />
       </div>
     );

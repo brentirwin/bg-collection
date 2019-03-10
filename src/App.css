@@ -13,6 +13,15 @@ h1 {
   color: #eee;
 }
 
+#loading {
+  margin-top: 100px;
+  color: #666;
+}
+
+#loading a {
+  color: #666;
+}
+
 .filter-label {
   color: #eee;
   margin: .5em;
@@ -40,7 +49,6 @@ ul.gamesList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 }
 
 img.thumbnail {
@@ -51,6 +59,12 @@ img.thumbnail {
 
 .game-info {
   text-align: left;
+}
+
+.top-visible {
+  display: flex;
+  width: 400px;
+  cursor: pointer;
 }
 
 .game-image-container {
@@ -73,19 +87,50 @@ img.thumbnail {
   padding-bottom: 5px;
 }
 
-.name {
-  padding-bottom: 5px;
+.bottom-hidden {
+  background-color: #222;
+  color: #ddd;
+  padding: 20px;
+  text-align: left;
+  font-size: 0.75em;
+  line-height: 1.5em;
 }
 
-.name a {
+.bottom-hidden ul {
+  padding-left: 0;
+}
+
+.bottom-hidden li {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid black;
+  margin: 5px;
+  color: #333;
+  background-color: #ccc;
+  white-space: nowrap;
+}
+
+.view-on-bgg {
+  text-align: center;
+}
+
+.view-on-bgg a {
+  color: #ddd;
+  font-weight: bold;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.name {
+  padding-bottom: 5px;
   color: #eee;
   font-weight: bold;
   font-size: 1.1em;
-  text-decoration: none;
 }
 
 .game {
-  display: flex;
   border: 1px solid #333;
   margin: 5px;
   border-radius: 10px;
