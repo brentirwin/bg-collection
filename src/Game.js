@@ -20,13 +20,13 @@ export const Game = props => {
             BGG Rating: {game.rating}
           </div>
           <div className="year">
-            Published in {game.year}
+            Complexity: {game.complexity}
           </div>
           <div className="players">
-            Players: {game.players.min}-{game.players.max}
+            Players: {game.numPlayers.min}-{game.numPlayers.max}
           </div>
           <div className="playtime">
-            Play time: {game.playtime.min}-{game.playtime.max} min
+            Play time: {game.playTime.min}-{game.playTime.max} min
           </div>
         </div>
       </div>

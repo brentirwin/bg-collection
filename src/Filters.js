@@ -11,12 +11,18 @@ const style = {
 
 export class Filters extends React.Component {
 	render() {
+		const numPlayersStr = (this.props.numPlayers === 10)
+												? '10+' : this.props.numPlayers.toString();
+		const playTimeStr = (this.props.playTime === 0) ? '<15'
+											: (this.props.playTime === 120) ? '120+'
+											: this.props.playTime.toString();
+
 		return (
 			<div className="filters">
 				<Filter
 					name="# of players"
 					id="numPlayers"
-					currentValue={this.props.numPlayers}
+					currentValue={numPlayersStr}
 					min={1}
 					max={10}
 					defaultValue={5}
@@ -28,7 +34,7 @@ export class Filters extends React.Component {
 				<Filter
 					name="Playtime (min)"
 					id="playTime"
-					currentValue={this.props.playTime}
+					currentValue={playTimeStr}
 					min={0}
 					max={120}
 					defaultValue={30}
@@ -52,7 +58,7 @@ const Filter = props => {
 					checked={props.filter[props.id]}
 					onChange={(e) => props.handleCheck(e)}
 				/>
-				{props.name}: {props.currentValue.string}
+				{props.name}: {props.currentValue}
 			</div>
 			<Slider
 				min={props.min}

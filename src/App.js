@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
 import {xml} from './dev-xml.js';
+import {xml_e} from './xml-extended.js';
 import { GamesList } from './GamesList.js';
 import { Filters } from './Filters.js';
 const convert = require('xml-js');
@@ -11,14 +12,8 @@ class App extends Component {
     super(props);
     this.state = {
       username: 'brentirwin',
-      numPlayers: {
-        string: '5',
-        num: 5
-      },
-      playTime: {
-        string: '30',
-        num: 30
-      },
+      numPlayers: 5,
+      playTime: 30,
       filter: {
         numPlayers: false,
         playTime: false
@@ -32,17 +27,17 @@ class App extends Component {
   }
 
   handleNumPlayersChange(value) {
-    const str = (value === 10) ? '10+' : value.toString();
-    const players = { string: str, num: value };
-    this.setState({ numPlayers: players });
+    // const str = (value === 10) ? '10+' : value.toString();
+    // const players = { string: str, num: value };
+    this.setState({ numPlayers: value });
   }
 
   handlePlayTimeChange(value) {
-    const str = (value === 0) ? '<15'
-          : (value === 120) ? '120+'
-          : value.toString();
-    const time = { string: str, num: value };
-    this.setState({ playTime: time });
+    // const str = (value === 0) ? '<15'
+    //       : (value === 120) ? '120+'
+    //       : value.toString();
+    // const time = { string: str, num: value };
+    this.setState({ playTime: value });
   }
 
   handleCheck(event) {
@@ -56,7 +51,7 @@ class App extends Component {
     this.setState({ filter: filter });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 /*
     const url =
       'https://boardgamegeek.com/xmlapi2/collection?username=' +
@@ -70,31 +65,50 @@ class App extends Component {
     });
 */
     const data = JSON.parse(
-      convert.xml2json(xml, { compact: true, spaces: 2})
+      convert.xml2json(xml_e, { compact: true, spaces: 2})
     );
 
     const games = (data.items.item).map(game => {
+
+      const getCategory = (cat) => {
+        return game.link.filter(link => {
+          return (link._attributes.type === cat) ? link : null;
+        }).map(link => {
+          return link._attributes.value;
+        });
+      };
+
       return {
-        id:         game._attributes.objectid,
-        name:       game.name._text,
+        id:         game._attributes.id,
+        name:       Array.isArray(game.name)
+                    ? game.name[0]._attributes.value
+                    : game.name._attributes.value,
         rating:     Math.round(parseFloat(
-                      game.stats.rating.average._attributes.value
+                      game.statistics.ratings.average._attributes.value
                     ) * 100) / 100,
         thumbnail:  game.thumbnail._text,
-        year:       game.yearpublished._text,
-        players: {
-          min:      parseInt(game.stats._attributes.minplayers),
-          max:      parseInt(game.stats._attributes.maxplayers)
+        year:       game.yearpublished._attributes.value,
+        numPlayers: {
+          min:      parseInt(game.minplayers._attributes.value),
+          max:      parseInt(game.maxplayers._attributes.value)
         },
-        playtime: {
-          min:      parseInt(game.stats._attributes.minplaytime),
-          max:      parseInt(game.stats._attributes.maxplaytime)
+        playTime: {
+          min:      parseInt(game.minplaytime._attributes.value),
+          max:      parseInt(game.maxplaytime._attributes.value)
         },
         url:        'https://boardgamegeek.com/boardgame/'
-                    + game._attributes.objectid,
+                    + game._attributes.id,
+        description: game.description._text,
+        categories: getCategory('boardgamecategory'),
+        mechanics:  getCategory('boardgamemechanic'),
+        designer:   getCategory('boardgamedesigner')[0],
+        complexity: Math.round(parseFloat(
+                      game.statistics.ratings.averageweight._attributes.value
+                    ) * 100) / 100
       }
     });
 
+    console.log(games);
     this.setState({ games: games });
   }
 
