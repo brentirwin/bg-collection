@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "9ea8483cfa091f6a18ed",
-    "url": "/bg-collection/static/css/main.c10637bf.chunk.css"
+    "revision": "8e4aa70f7f1f37718e82",
+    "url": "/bg-collection/static/css/main.ebe76a93.chunk.css"
   },
   {
-    "revision": "9ea8483cfa091f6a18ed",
-    "url": "/bg-collection/static/js/main.828c4bbe.chunk.js"
+    "revision": "8e4aa70f7f1f37718e82",
+    "url": "/bg-collection/static/js/main.73780757.chunk.js"
   },
   {
     "revision": "33a833f3b86279396edf",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/bg-collection/static/js/2.e702c18e.chunk.js"
   },
   {
-    "revision": "17073815e2a6d95a74251dfb5b568a73",
+    "revision": "e97b68435360df1a8ba116618df1d468",
     "url": "/bg-collection/index.html"
   }
 ];

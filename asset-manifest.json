@@ -1,15 +1,15 @@
 {
-  "main.css": "/bg-collection/static/css/main.c10637bf.chunk.css",
-  "main.js": "/bg-collection/static/js/main.828c4bbe.chunk.js",
-  "main.js.map": "/bg-collection/static/js/main.828c4bbe.chunk.js.map",
+  "main.css": "/bg-collection/static/css/main.ebe76a93.chunk.css",
+  "main.js": "/bg-collection/static/js/main.73780757.chunk.js",
+  "main.js.map": "/bg-collection/static/js/main.73780757.chunk.js.map",
   "runtime~main.js": "/bg-collection/static/js/runtime~main.812487da.js",
   "runtime~main.js.map": "/bg-collection/static/js/runtime~main.812487da.js.map",
   "static/css/2.bd812703.chunk.css": "/bg-collection/static/css/2.bd812703.chunk.css",
   "static/js/2.e702c18e.chunk.js": "/bg-collection/static/js/2.e702c18e.chunk.js",
   "static/js/2.e702c18e.chunk.js.map": "/bg-collection/static/js/2.e702c18e.chunk.js.map",
   "index.html": "/bg-collection/index.html",
-  "precache-manifest.84976970784f41960687bd9a20441c3a.js": "/bg-collection/precache-manifest.84976970784f41960687bd9a20441c3a.js",
+  "precache-manifest.d433610406cae29c7dc547f06790b195.js": "/bg-collection/precache-manifest.d433610406cae29c7dc547f06790b195.js",
   "service-worker.js": "/bg-collection/service-worker.js",
   "static/css/2.bd812703.chunk.css.map": "/bg-collection/static/css/2.bd812703.chunk.css.map",
-  "static/css/main.c10637bf.chunk.css.map": "/bg-collection/static/css/main.c10637bf.chunk.css.map"
+  "static/css/main.ebe76a93.chunk.css.map": "/bg-collection/static/css/main.ebe76a93.chunk.css.map"
 }
