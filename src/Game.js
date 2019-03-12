@@ -68,6 +68,8 @@ const HiddenBottom = props => {
       <Tags tags={game.categories} />
       <h4>Mechanics</h4>
       <Tags tags={game.mechanics} />
+      <h4>Designer</h4>
+      {game.designer}
       <h4>Description</h4>
       {game.description}
     </div>

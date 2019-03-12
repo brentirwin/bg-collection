@@ -3,8 +3,7 @@ import './App.css';
 import axios from "axios";
 import { GamesList } from './GamesList.js';
 import { Filters } from './Filters.js';
-import { user } from './user.js';
-import { defaults } from './defaults.js';
+import { user, defaults } from './config.js';
 const convert = require('xml-js');
 
 class App extends Component {

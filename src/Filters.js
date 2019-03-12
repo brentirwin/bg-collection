@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { defaults } from './defaults.js';
+import { defaults } from './config.js';
 
 const style = {
 	width: 300,
@@ -51,7 +51,7 @@ export class Filters extends React.Component {
 					name="Complexity"
 					id="complexity"
 					currentValue={complexity}
-					min={0}
+					min={1}
 					max={5}
 					defaultValue={defaults.complexity}
 					step={0.5}
